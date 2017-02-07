@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.9, for osx10.9 (x86_64)
 --
--- Host: localhost    Database: Blog
+-- Host: localhost    Database: blog
 -- ------------------------------------------------------
 -- Server version	5.7.17
 
@@ -24,13 +24,11 @@ DROP TABLE IF EXISTS `blog_tags`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `blog_tags` (
   `id` int(11) NOT NULL,
-  `post_id` int(11) DEFAULT NULL,
-  `tag_id` int(11) DEFAULT NULL,
+  `post_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_blog_tags_posts1_idx` (`post_id`),
-  KEY `fk_blog_tags_tags1_idx` (`tag_id`),
-  CONSTRAINT `fk_blog_tags_posts1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_blog_tags_tags1` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_blog_tags_tags1_idx` (`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -53,9 +51,10 @@ DROP TABLE IF EXISTS `posts`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `posts` (
   `id` int(11) NOT NULL,
-  `title` varchar(100) DEFAULT NULL,
-  `body` varchar(500) DEFAULT NULL,
-  `date_posted` date DEFAULT NULL,
+  `user` varchar(45) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `body` varchar(500) NOT NULL,
+  `date_posted` date NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -66,7 +65,7 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` VALUES (1,'Is it over?','Capicola jerky ham, leberkas beef ribs pork belly short loin venison corned beef sausage filet mignon turkey. Leberkas drumstick filet mignon ham hock swine cow boudin shank.','2017-01-17'),(2,'My legacy','Flank leberkas turducken, shankle brisket pork prosciutto porchetta jerky. Rump swine pig, bacon tenderloin boudin jowl kevin turducken. Leberkas shankle t-bone boudin shoulder.\n\nJerky spare ribs sirloin pancetta pork loin bresaola drumstick beef ribs turkey landjaeger t-bone tri-tip beef. Pancetta landjaeger ham hock bresaola meatloaf. Short ribs swine meatloaf andouille salami.','2017-01-18'),(3,'Witcher\'s friend','Bresaola tail swine short ribs. Pork loin filet mignon flank pork belly pork chop andouille strip steak. Rump ham short ribs bresaola. Shank beef ribs pastrami, hamburger doner swine pancetta strip steak kielbasa ham hock tongue t-bone tri-tip.','2017-01-18'),(4,'King','Bacon beef ribs cow kevin, short loin sausage leberkas t-bone rump ribeye boudin brisket pancetta meatball landjaeger. Landjaeger tenderloin kevin prosciutto short loin pancetta turducken tri-tip ham. Brisket pork belly jowl, kevin capicola ham ball tip jerky. Pancetta ball tip tail strip steak beef turducken sirloin shankle doner tenderloin. ','2017-01-19'),(5,'Spy','Tenderloin andouille doner sirloin. Ham hock shank swine meatball filet mignon tail doner. Pork belly beef cow prosciutto shankle porchetta. Turducken short ribs capicola turkey, doner jerky strip steak sirloin pork belly kielbasa rump swine flank filet mignon biltong. Short ribs prosciutto tongue swine meatball jerky sausage kevin filet mignon chicken.','2017-01-19'),(6,'Demon Hunter','Lorem ipsum dolor amet rump biltong beef ribs boudin tenderloin capicola. Shankle capicola chicken brisket ball tip landjaeger corned beef prosciutto kielbasa. Filet mignon short ribs shankle, meatball beef doner pancetta venison fatback strip steak. Brisket andouille meatball landjaeger ham. Shankle turducken leberkas, pork chop prosciutto ham boudin kevin sirloin cow.','2017-01-19');
+INSERT INTO `posts` VALUES (1,'Illidan','Is it over?','Capicola jerky ham, leberkas beef ribs pork belly short loin venison corned beef sausage filet mignon turkey. Leberkas drumstick filet mignon ham hock swine cow boudin shank.','2017-01-17'),(2,'Illidan','My legacy','Flank leberkas turducken, shankle brisket pork prosciutto porchetta jerky. Rump swine pig, bacon tenderloin boudin jowl kevin turducken. Leberkas shankle t-bone boudin shoulder.\n\nJerky spare ribs sirloin pancetta pork loin bresaola drumstick beef ribs turkey landjaeger t-bone tri-tip beef. Pancetta landjaeger ham hock bresaola meatloaf. Short ribs swine meatloaf andouille salami.','2017-01-18'),(3,'Vernon Roche','Witcher\'s friend','Bresaola tail swine short ribs. Pork loin filet mignon flank pork belly pork chop andouille strip steak. Rump ham short ribs bresaola. Shank beef ribs pastrami, hamburger doner swine pancetta strip steak kielbasa ham hock tongue t-bone tri-tip.','2017-01-18'),(4,'Athas','King','Bacon beef ribs cow kevin, short loin sausage leberkas t-bone rump ribeye boudin brisket pancetta meatball landjaeger. Landjaeger tenderloin kevin prosciutto short loin pancetta turducken tri-tip ham. Brisket pork belly jowl, kevin capicola ham ball tip jerky. Pancetta ball tip tail strip steak beef turducken sirloin shankle doner tenderloin. ','2017-01-19'),(5,'Geralt','Spy','Tenderloin andouille doner sirloin. Ham hock shank swine meatball filet mignon tail doner. Pork belly beef cow prosciutto shankle porchetta. Turducken short ribs capicola turkey, doner jerky strip steak sirloin pork belly kielbasa rump swine flank filet mignon biltong. Short ribs prosciutto tongue swine meatball jerky sausage kevin filet mignon chicken.','2017-01-19'),(6,'Illidan','Demon Hunter','Lorem ipsum dolor amet rump biltong beef ribs boudin tenderloin capicola. Shankle capicola chicken brisket ball tip landjaeger corned beef prosciutto kielbasa. Filet mignon short ribs shankle, meatball beef doner pancetta venison fatback strip steak. Brisket andouille meatball landjaeger ham. Shankle turducken leberkas, pork chop prosciutto ham boudin kevin sirloin cow.','2017-01-19');
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -79,7 +78,7 @@ DROP TABLE IF EXISTS `tags`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tags` (
   `id` int(11) NOT NULL,
-  `Name` varchar(45) DEFAULT NULL,
+  `Name` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -103,4 +102,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-25 16:57:39
+-- Dump completed on 2017-02-07 17:05:03
